@@ -1,7 +1,24 @@
-function mathInfo() {
-    var randomNumber = Math.floor(Math.random() * 100);
-    //poniżej napisz rozwiązanie zadania
-}
+$(function() {
 
-//to wywołanie ma spowodować wyświetlenie w konsoli informacji z zadania
-mathInfo();
+
+
+    var displayErrorMessage = function(){
+        var errorDiv = $("<div>");
+        $("body").append(errorDiv);
+        errorDiv.text("Unable to load the records");
+    }
+
+
+    $.get("http://localhost:8282/books/").done(function(result) {
+        
+        var table=$("table");
+
+        for(var i=0; i<result.length; i++){
+            table.append(`<tr><td>${result[i].title}</td></tr>`);
+        };
+
+    }).fail(displayErrorMessage);
+
+
+
+});
