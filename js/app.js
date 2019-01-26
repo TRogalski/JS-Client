@@ -1,9 +1,8 @@
 $(function() {
-
-
+    
     function addBook(book){
         var body=$("body");
-        var element = $(`<p id=${book.id}>${book.title}</p><div></div>`);
+        var element = $(`<div id=${book.id}>${book.title}<button id=btn${book.id} data-id=${book.id}>Remove</button></div><div></div>`);
         body.append(element);
         $(`#${book.id}`).on("click", function(book){
             
@@ -17,6 +16,21 @@ $(function() {
                     target.empty();
                 }
             })
+
+
+        })
+
+        $(`#btn${book.id}`).on("click",function(event){
+            event.stopPropagation();
+            var bookId = event.target.dataset.id;
+            $.ajax({
+                url: `http://localhost:8282/books/${bookId}`,
+                type: 'DELETE'
+            }).done(function(){
+                $(`#${bookId}`).next().remove();
+                $(`#${bookId}`).remove();
+                $(`#btn${bookId}`).remove();
+            });
         })
     }
 
