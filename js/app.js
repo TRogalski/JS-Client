@@ -19,7 +19,7 @@ $(function() {
             var bookId=$(this).attr("id");
 
             $.get(`http://localhost:8282/books/${bookId}`).done(function(book){
-                var info = `${book.isbn}`;
+                var info = `isbn: ${book.isbn}<br> author: ${book.author}<br> publisher: ${book.publisher} <br> type: ${book.type}`;
                 var target = $(`#${book.id}`).next();
                 if(target.is(':empty')){
                     target.append(info);
